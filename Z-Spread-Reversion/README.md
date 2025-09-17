@@ -158,6 +158,7 @@
     <li>Add <strong>position sizing</strong> by volatility, <strong>Kelly fraction</strong>, or <strong>risk parity</strong>.</li>
     <li>Introduce <strong>regime filters</strong> (e.g., require high rolling correlation, or macro filters).</li>
     <li>Generalize to a <strong>symbol pairs list</strong> and run a portfolio of spreads.</li>
+    <li>Develop more comphrensive backtesting process to avoid p-hacking</li>
   </ul>
 
   <hr>
