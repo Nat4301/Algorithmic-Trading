@@ -28,7 +28,7 @@ class TradingSignal:
     xom_price: float
 
 
-#  Utils functions 
+# Utils functions 
 def sharpe_sortino(
     returns: np.ndarray,
     *,
@@ -82,7 +82,7 @@ def max_drawdown_from_equity(equity: np.ndarray) -> float:
     return float(drawdowns.min() if drawdowns.size else 0.0)
 
 
-#  Strategy 
+# Strategy 
 class ZScoreReversalStrategy:
     def __init__(
         self,
@@ -105,7 +105,7 @@ class ZScoreReversalStrategy:
         self.positions = []
         self.performance_metrics: Dict = {}
 
-    # ---------- Data ----------
+    # Data
     def fetch_databento_data(self, file_path: str, symbols: List[str] = ["CVX", "XOM"]) -> pd.DataFrame:
         store = DBNStore.from_file(file_path)
         df = store.to_df()
@@ -130,7 +130,7 @@ class ZScoreReversalStrategy:
         )
         return price_data
 
-    #  Features 
+    # Features 
     def calculate_spread_and_zscore(self, data: pd.DataFrame) -> pd.DataFrame:
         df = data.copy()
         df["log_cvx"] = np.log(df["CVX"])  # log prices
@@ -243,7 +243,7 @@ class ZScoreReversalStrategy:
 
                 current_position = None
 
-        #  Metrics 
+        # Metrics 
         perf: Dict[str, float] = {}
         n_trades = len(trade_pnl)
         total_return = (portfolio_value - initial_capital) / initial_capital if initial_capital != 0 else 0.0
@@ -280,7 +280,7 @@ class ZScoreReversalStrategy:
         }
         return self.performance_metrics
 
-    #  Reporting 
+    # Reporting 
     def plot_results(self):
         if self.data is None:
             raise ValueError("No data available. Run the strategy first.")
@@ -350,17 +350,13 @@ def run_zscore_strategy():
         use_trade_returns=True,
     )
 
+    #Some Example Hyperparameters but be cautious of overfit
     # Hyperparameters for 1h data
     # lookback_window = 50,
     # entry_threshold = 0.6546503939723856,
     # exit_threshold = 0.6353198417703924,
     # stop_loss_threshold = 5.85432814273555,
-
-    #lookback_window: 21
-    #entry_threshold: 0.9621072649698491
-    #exit_threshold: 0.6601944193593805
-    #stop_loss_threshold: 2.1375479724583384
-
+    
     # Hyperparameters for 1d data
     # lookback_window: 228
     # entry_threshold: 1.8070954005506952
@@ -383,4 +379,5 @@ def run_zscore_strategy():
 
 if __name__ == "__main__":
     strategy = run_zscore_strategy()
+
 
