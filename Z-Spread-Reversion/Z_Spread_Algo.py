@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 from databento import DBNStore
 
 
-# ======== Data structures ========
+# Data structures 
 @dataclass
 class TradingSignal:
     timestamp: pd.Timestamp
@@ -28,25 +28,14 @@ class TradingSignal:
     xom_price: float
 
 
-# ======== Utility functions ========
+#  Utils functions 
 def sharpe_sortino(
     returns: np.ndarray,
     *,
     MAR: float = 0.0,                 # annualized minimum acceptable return (e.g., risk-free)
     periods_per_year: Optional[int] = None,  # if None, no annualization scaling is applied
 ) -> Dict[str, float]:
-    """Compute annualized Sharpe & Sortino on a series of periodic returns.
-
-    Parameters
-    ----------
-    returns : np.ndarray
-        Periodic return series (e.g., trade-to-trade or daily). Should be in decimal form.
-    MAR : float
-        Annualized Minimum Acceptable Return (decimal). Converts to per-period when annualizing.
-    periods_per_year : Optional[int]
-        If provided, we treat `returns` as per-period and annualize using sqrt(periods_per_year).
-        If None, no annualization is applied and MAR is assumed already in the same scale as returns.
-    """
+    """Compute annualized Sharpe & Sortino on a series of periodic returns. """
     arr = np.asarray(returns, dtype=float)
     arr = arr[~np.isnan(arr)]
     out = {"sharpe": 0.0, "sortino": 0.0, "sharpe_ann": 0.0, "sortino_ann": 0.0}
@@ -93,7 +82,7 @@ def max_drawdown_from_equity(equity: np.ndarray) -> float:
     return float(drawdowns.min() if drawdowns.size else 0.0)
 
 
-# ======== Strategy ========
+#  Strategy 
 class ZScoreReversalStrategy:
     def __init__(
         self,
@@ -141,7 +130,7 @@ class ZScoreReversalStrategy:
         )
         return price_data
 
-    # ---------- Features ----------
+    #  Features 
     def calculate_spread_and_zscore(self, data: pd.DataFrame) -> pd.DataFrame:
         df = data.copy()
         df["log_cvx"] = np.log(df["CVX"])  # log prices
@@ -163,7 +152,7 @@ class ZScoreReversalStrategy:
         self.data = df
         return df
 
-    # ---------- Signals ----------
+    # Signals 
     def generate_signals(self, data: pd.DataFrame) -> List[TradingSignal]:
         signals: List[TradingSignal] = []
         position = 0  # 0: flat, 1: long spread, -1: short spread
@@ -198,7 +187,7 @@ class ZScoreReversalStrategy:
         self.signals = signals
         return signals
 
-    # ---------- Backtest ----------
+    # Backtest 
     def backtest_strategy(self, *, initial_capital: float = 100_000, position_size: float = 0.1) -> Dict:
         if not self.signals:
             raise ValueError("No signals generated. Run generate_signals first.")
@@ -254,7 +243,7 @@ class ZScoreReversalStrategy:
 
                 current_position = None
 
-        # ===== Metrics =====
+        #  Metrics 
         perf: Dict[str, float] = {}
         n_trades = len(trade_pnl)
         total_return = (portfolio_value - initial_capital) / initial_capital if initial_capital != 0 else 0.0
@@ -291,7 +280,7 @@ class ZScoreReversalStrategy:
         }
         return self.performance_metrics
 
-    # ---------- Reporting ----------
+    #  Reporting 
     def plot_results(self):
         if self.data is None:
             raise ValueError("No data available. Run the strategy first.")
@@ -350,7 +339,7 @@ class ZScoreReversalStrategy:
         print(f"Max Drawdown (from equity): {pm['max_drawdown']:.2%}")
 
 
-# ======== Runner ========
+# Runner 
 def run_zscore_strategy():
     strategy = ZScoreReversalStrategy(
         lookback_window = 50,
@@ -361,7 +350,7 @@ def run_zscore_strategy():
         use_trade_returns=True,
     )
 
-    # Hyperparameters for 1h algo
+    # Hyperparameters for 1h data
     # lookback_window = 50,
     # entry_threshold = 0.6546503939723856,
     # exit_threshold = 0.6353198417703924,
@@ -372,7 +361,7 @@ def run_zscore_strategy():
     #exit_threshold: 0.6601944193593805
     #stop_loss_threshold: 2.1375479724583384
 
-    # 1d hyperparameters
+    # Hyperparameters for 1d data
     # lookback_window: 228
     # entry_threshold: 1.8070954005506952
     # exit_threshold: 0.7022162346847439
@@ -394,3 +383,4 @@ def run_zscore_strategy():
 
 if __name__ == "__main__":
     strategy = run_zscore_strategy()
+
