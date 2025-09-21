@@ -10,8 +10,8 @@ import zstandard as zstd
 
 def decompress_zst_folder(remove_suffix: bool = True):
 
-    input_dir = Path(r"C:\Users\habel\OneDrive\Desktop\Algo Trade\Data\EQUS-20250917-YWVRW6FK4P")
-    output_dir = Path(r"C:\Users\habel\OneDrive\Desktop\Algo Trade\Data\US Equity DBN")
+    input_dir = Path(r"") #Change File name to DBN Folder
+    output_dir = Path(r"") #Change File name to output csv
     output_dir.mkdir(parents=True, exist_ok=True)
 
     for file in input_dir.glob("*.zst"):
@@ -27,4 +27,5 @@ def decompress_zst_folder(remove_suffix: bool = True):
             print(f"[ERROR] Failed to decompress {file.name}: {e}")
 
 decompress_zst_folder()
+
 
