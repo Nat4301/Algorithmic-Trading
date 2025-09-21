@@ -396,8 +396,8 @@ def main():
     Main function to run the consolidation process.
     """
     # Configuration
-    INPUT_FOLDER = r"C:\Users\habel\OneDrive\Desktop\Algo Trade\Data\US Equity DBN"  # Update this path
-    OUTPUT_FILE = r"C:\Users\habel\OneDrive\Desktop\Algo Trade\Data\trading_universe.csv"
+    INPUT_FOLDER = r""  # Change File name to DBN Folder
+    OUTPUT_FILE = r"" #Change File name to output csv 
 
     # Create consolidator instance
     consolidator = DBNConsolidator(INPUT_FOLDER, OUTPUT_FILE)
@@ -408,4 +408,5 @@ def main():
 
 
 if __name__ == "__main__":
+
     main()
