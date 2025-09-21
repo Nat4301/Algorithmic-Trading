@@ -481,7 +481,7 @@ def main():
     Main function to run the backtest.
     """
     # Configuration
-    DATA_FILE = r"C:\Users\habel\OneDrive\Desktop\Algo Trade\Data\filtered_universe.csv"
+    DATA_FILE = r"" #Change File name to your stock universe 
     START_DATE = "2023-01-01"
     END_DATE = "2024-12-31"
     INITIAL_CAPITAL = 100000
