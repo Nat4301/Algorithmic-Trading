@@ -393,8 +393,8 @@ def main():
     Main function to run the filtering process.
     """
     # Configuration
-    INPUT_CSV = r"C:\Users\habel\OneDrive\Desktop\Algo Trade\Data\trading_universe.csv"
-    OUTPUT_CSV = r"C:\Users\habel\OneDrive\Desktop\Algo Trade\Data\filtered_universe_filtered.csv"
+    INPUT_CSV = r"" #Change file name to your stock universe CSV (From Universe Creation)
+    OUTPUT_CSV = r"" #Change file name to your new CSV file 
     TOP_N = 5000  # Number of top companies to select
 
     # Create filter instance
